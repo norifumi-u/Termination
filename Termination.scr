@@ -1,0 +1,16 @@
+module termination;
+
+global protocol Termination(role Main, role Interface1, role Interface2, role Thread) {
+       rec t {
+         isShutdouwnRequested() from Thread from Interface1;
+         choice at Interface1 {
+           true from Interface1 to Thread;
+         } or {
+           false from Interface1 to Thread;
+	   continue t;
+         }
+       }
+       
+       shutdownRequest() from Main to Interface2;
+       shutdownRequested() from Interface2 to Interface1;
+}
