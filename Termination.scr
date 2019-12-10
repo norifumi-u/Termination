@@ -1,16 +1,16 @@
 module Termination;
 
-global protocol Termination(role Main, role Interface1, role Interface2, role Thread) {
+global protocol Termination(role Main, role Interface1, role Interface2, role TThread) {
 
        shutdownRequest() from Main to Interface1;	
        
        rec t {
-         isShutdouwnRequested() from Thread to Interface2;
+         isShutdouwnRequested() from TThread to Interface2;
          choice at Interface2 {
-           false() from Interface2 to Thread;
+           false() from Interface2 to TThread;
 	   continue t;
          } or {
-           true() from Interface2 to Thread;
+           true() from Interface2 to TThread;
          }
        }
        
